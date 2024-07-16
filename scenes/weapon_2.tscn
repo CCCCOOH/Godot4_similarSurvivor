@@ -1,0 +1,46 @@
+[gd_scene load_steps=6 format=3 uid="uid://dknqth260wrti"]
+
+[ext_resource type="Script" path="res://scenes/weapon_2.gd" id="1_bppgs"]
+[ext_resource type="Texture2D" uid="uid://bn2erd6nblcse" path="res://sprites/weapons/weapon_sheets/weapons_sheet.png" id="2_ctvyr"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ejsn4"]
+atlas = ExtResource("2_ctvyr")
+region = Rect2(62, 96, 24, 16)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hq4mm"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ejsn4")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_mtt42"]
+radius = 153.0
+
+[node name="weapon2" type="Node2D"]
+script = ExtResource("1_bppgs")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+z_index = 1
+sprite_frames = SubResource("SpriteFrames_hq4mm")
+
+[node name="Timer" type="Timer" parent="."]
+autostart = true
+
+[node name="Marker2D" type="Marker2D" parent="."]
+position = Vector2(9, 1)
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 0
+collision_mask = 16
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_mtt42")
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_area_2d_body_exited"]
